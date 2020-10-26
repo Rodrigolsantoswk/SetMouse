@@ -19,19 +19,118 @@ End Sub
 Private Sub TextBox1_AfterUpdate()
     On Error GoTo erro
     LabelErro = ""
-    Workbooks("Inventario compostos.xlsm").Sheets("aux").Range("A1:Z1").Clear
+    Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1:Z1").Clear
     If TextBox1 <> "" Then
-        If TextBox1 = "" Then
-            
+        If localizacao <> "" Then
+            If TextBox1 = "Terreo" Or TextBox1 = "Primeiro Piso" Then
+                localizacao = TextBox1
+                LabelTitulo = "Bipe os pallets"
+                LabelLocal.Caption = "Localização atual: " + localizacao
+                LabelAviso = "Localização alterada para: " + localizacao
+                TextBox1 = ""
+                    Application.SendKeys ("{TAB}")
+                    Application.SendKeys ("{TAB}")
+                    Application.SendKeys ("{TAB}")
+                    Application.SendKeys ("{TAB}")
+                    Application.SendKeys ("{TAB}")
+            ElseIf UCase(Left(TextBox1, 5)) = "9241H" Then
+                Call SetMouse
+                 
+                Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Paste Destination:=Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1048576").End(xlUp).Offset(0, 0)
+                Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1048576").End(xlUp).Offset(0, 16) = localizacao
+                Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1048576").End(xlUp).Offset(0, 17) = Now
+                Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Rows(Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1048576").End(xlUp).Row - 1).EntireRow.Delete
+               
+                UserForm1.Height = 254
+                tbCompound = Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1").Offset(0, 1)
+                'Isolando a versão
+                aux = Right(tbCompound, 11)
+                tbVersao = Left(aux, 4)
+                
+                a1 = Right(UserForm1.TextBox1, 5)
+                a2 = Left(a1, 1)
+                UCase (a2)
+                
+                If (a2 = "A" Or a2 = "B" Or a2 = "C" Or a2 = "D" Or a2 = "E" Or a2 = "F") Then
+                    tbBoxId = Right(UserForm1.TextBox1, 13)
+                    
+                Else
+                    tbBoxId = Right(UserForm1.TextBox1, 12)
+                End If
+                
+                tbScale = Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1").Offset(0, 4)
+                tbMixer = Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1").Offset(0, 3)
+                tbTime = Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1").Offset(0, 13)
+                tbOperator = Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1").Offset(0, 10)
+                tbPeso = Workbooks("Inventario sala de quimicos.xlsm").Sheets("aux").Range("A1").Offset(0, 6)
+                TextBox1.Enabled = False
+                ToggleButton1.Enabled = False
+                Application.SendKeys ("{TAB}")
+                Application.SendKeys ("{TAB}")
+                Application.SendKeys ("{TAB}")
+                Application.SendKeys ("{TAB}")
+                Application.SendKeys ("{TAB}")
+            Else
+                LabelErro = "Bipe uma etiqueta de pigmentos."
+                TextBox1 = ""
+            End If
+        Else
+            If TextBox1 = "Primeiro Piso" Or TextBox1 = "Terreo" Then
+                localizacao = TextBox1
+                LabelTitulo = "Bipe os pallets"
+                LabelLocal.Caption = "Localização atual: " + localizacao
+                TextBox1 = ""
+                    Application.SendKeys ("{TAB}")
+                    Application.SendKeys ("{TAB}")
+                    Application.SendKeys ("{TAB}")
+                    Application.SendKeys ("{TAB}")
+                    Application.SendKeys ("{TAB}")
+
+            ElseIf UCase(Left(TextBox1, 5)) = "9241H" Then
+                LabelErro = "Bipe a localização primeiro."
+                TextBox1 = ""
+            Else
+                LabelErro = "Bipe uma localização válida."
+                TextBox1 = ""
+            End If
         End If
     End If
-    
+    Exit Sub
 erro:
     MsgBox "Erro de execução: " & Err.Description
     TextBox1 = ""
     TextBox1.SetFocus
     
 End Sub
+
+
+Private Sub ToggleButton1_Click()
+
+
+    If localizacao <> "" Then
+        UserForm2.TextBox3.Clear
+        UserForm2.TextBox4.Clear
+        
+        lin = 1
+        
+        Do Until Sheets("p1").Cells(lin, 1) = ""
+        
+        UserForm2.TextBox4.AddItem Sheets("p1").Cells(lin, 1)
+        lin = lin + 1
+        Loop
+        lin = 1
+        Do Until Sheets("p1").Cells(lin, 2) = ""
+        
+        UserForm2.TextBox3.AddItem Sheets("p1").Cells(lin, 2)
+        lin = lin + 1
+        Loop
+        UserForm2.Show
+       
+    Else
+        LabelErro = "Bipe a localização primeiro."
+    End If
+End Sub
+
 
 
 Private Sub ToggleButton1_Click()
