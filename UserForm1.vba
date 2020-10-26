@@ -27,7 +27,7 @@ Private Sub TextBox1_AfterUpdate()
     End If
     
 erro:
-    MsgBox "Erro de execução: " & Err.Description
+    MsgBox "Erro de execuÃ§Ã£o: " & Err.Description
     TextBox1 = ""
     TextBox1.SetFocus
     
@@ -57,7 +57,7 @@ Private Sub ToggleButton1_Click()
         UserForm2.Show
        
     Else
-        LabelErro = "Bipe a localização primeiro."
+        LabelErro = "Bipe a localizaÃ§Ã£o primeiro."
     End If
 End Sub
 
@@ -79,7 +79,7 @@ Private Sub ToggleButton3_Click()
                 
     
     
-    LabelAviso = "Última caixa validada: " + Right(TextBox1, 12)
+    LabelAviso = "Ãšltima caixa validada: " + Right(TextBox1, 12)
     
     UserForm1.Height = 109
     ToggleButton1.Enabled = True
