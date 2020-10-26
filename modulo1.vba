@@ -16,7 +16,7 @@ Sub iniciar()
     UserForm1.Show
     tipoinventario = ""
     localizacao = ""
-    UserForm1.LabelLocal.Caption = "Localização atual: " + localizacao
+    UserForm1.LabelLocal.Caption = "LocalizaÃ§Ã£o atual: " + localizacao
     
 End Sub
 
@@ -57,7 +57,7 @@ Sub SetMouse()
     'Posicionar no icone do MMS
     SetCursorPos 260, 1041
     Call LeftClick
-    'Posicionar na opção Ordens
+    'Posicionar na opÃ§Ã£o Ordens
     Sleep 100
     SetCursorPos 20, 75
     Call LeftClick
